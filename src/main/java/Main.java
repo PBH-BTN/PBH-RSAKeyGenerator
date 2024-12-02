@@ -12,8 +12,8 @@ public class Main {
     public static void main(String[] args) throws Exception {
         String privateKey = Files.readString(new File("private_key.pem").toPath());
         String publicKey = Files.readString(new File("public_key.pem").toPath());
-        for (int i = 0; i < 1000; i++) {
-            System.out.println(genKey("爱发电", "爱发电用户", null, privateKey));
+        for (int i = 0; i < 1; i++) {
+            System.out.println(genKey("爱发电", "爱发电用户_9e43d", UUID.randomUUID().toString(), privateKey));
         }
     }
 
@@ -32,7 +32,7 @@ public class Main {
                 licenseTo,
                 System.currentTimeMillis(),
                 LocalDateTime.now().plusYears(100).atOffset(ZoneOffset.UTC).toInstant().toEpochMilli(),
-                description, UUID.randomUUID().toString());
+                description, UUID.randomUUID().toString(), "afdian");
         var encrypted = (RSAUtils.encryptByPrivateKey(new Gson().toJson(key).getBytes(StandardCharsets.UTF_8), privateKey));
         return Base64.getEncoder().encodeToString(encrypted);
     }
@@ -51,7 +51,9 @@ public class Main {
             // 许可证描述
             String description,
             // 隐藏字段，主要是为了改变 KEY，PBH 并不关心这个字段
-            String hidden
+            String hidden,
+            // 许可证类型，默认 afdian
+            String type
     ) {
     }
 }
